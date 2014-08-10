@@ -1,0 +1,27 @@
+{
+  "name": "soundbank-trigger",
+  "version": "0.0.0",
+  "description": "Trigger soundbank slots by piping in ditty events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmckegg/soundbank-trigger.git"
+  },
+  "keywords": [
+    "soundbank",
+    "trigger",
+    "midi",
+    "ditty",
+    "waapi",
+    "playback"
+  ],
+  "author": "Matt McKegg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmckegg/soundbank-trigger/issues"
+  },
+  "homepage": "https://github.com/mmckegg/soundbank-trigger"
+}
