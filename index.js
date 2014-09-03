@@ -1,4 +1,4 @@
-var Transform = require('stream').Transform
+var Stream = require('stream')
 var inherits = require('util').inherits
 
 module.exports = SoundbankTrigger
@@ -7,15 +7,23 @@ function SoundbankTrigger(soundbank){
   if (!(this instanceof SoundbankTrigger)){
     return new SoundbankTrigger(soundbank)
   }
-  Transform.call(this, {objectMode: true})
+  Stream.call(this)
+
+  this.writable = true
+  this.readable = true
 
   this.soundbank = soundbank
   this._pendingRead = false
 }
 
-inherits(SoundbankTrigger, Transform)
+inherits(SoundbankTrigger, Stream)
 
-SoundbankTrigger.prototype._write = function(data, enc, cb){
+
+SoundbankTrigger.prototype.push = function(data){
+  this.emit('data', data)
+}
+
+SoundbankTrigger.prototype.write = function(data){
   if (data.event === 'start'){
     this.soundbank.triggerOn(data.id, data.time)
   } else if (data.event === 'stop'){
@@ -23,14 +31,6 @@ SoundbankTrigger.prototype._write = function(data, enc, cb){
   }
 
   // pass thru data
-  if (this._pendingRead){
-    this.push(data)
-  }
-
-  cb()
+  this.push(data)
+  return true
 }
-
-SoundbankTrigger.prototype._read = function(){
-  this._pendingRead = true
-}
-
